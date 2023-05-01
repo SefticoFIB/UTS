@@ -1,6 +1,6 @@
 <?php
 $servername = "DB-redlock";
-$username = "php_docker";
+$username = "dockerPhp";
 $password = "password";
 $dbname = "redlock-db";
 
@@ -12,13 +12,18 @@ if (!$conn) {
     die("Koneksi gagal: " . mysqli_connect_error());
 }
 
-$sql = "SELECT COUNT(*) as total FROM users";
+// Menampilkan seluruh isi tabel users
+$sql = "SELECT * FROM users";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
-    // Menampilkan jumlah user
-    $row = mysqli_fetch_assoc($result);
-    echo "Jumlah user: " . $row["total"];
+    // Menampilkan data setiap baris dari tabel
+    while($row = mysqli_fetch_assoc($result)) {
+        echo "ID: " . $row["ID"] . " - Nama: " . $row["Nama"] . " - Alamat: " . $row["Alamat"] . " - Jabatan: " . $row["Jabatan"] . "<br>";
+    }
 } else {
     echo "0 results";
 }
+
+mysqli_close($conn);
+?>
